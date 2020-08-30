@@ -9,7 +9,7 @@ output: html_document
 
 To participate in PLSC 31101, you will need access to the software described below. 
 
-Once you've installed all of the software below, test your installation by following the instructions at the bottom on this page.
+Once you have installed all of the software below, test your installation by following the instructions at the bottom of this page.
 
 ##  R
 
@@ -17,25 +17,27 @@ Once you've installed all of the software below, test your installation by follo
 
 To download R, go to [CRAN](https://cran.r-project.org/) (the **C**omprehensive **R** **A**rchive **N**etwork).
 
-A new major version of R comes out once a year, and there are 2-3 minor releases each year. It’s a good idea to update regularly. Upgrading can be a bit of a hassle, especially for major versions, which require you to reinstall all your packages, but putting it off only makes it worse.
+A new major version of R comes out once a year, and there are 2-3 minor releases each year. It is a good idea to update regularly. Upgrading can be a bit of a hassle, especially for major versions, which require you to reinstall all your packages, but putting it off only makes it worse.
 
-## R Studio
+For this class, please install R Version 3.6.3. You will notice that this is not the most recent version, but it is more stable than the newer 4.0. If you use a Mac, this will require at least 10.11 (El Capitan) as your OS; if you use a PC, anything Windows 7 or later will be sufficient.
 
-To interact with R, we use RStudio. Please install the latest desktop version of [RStudio IDE](http://www.rstudio.com/ide/download/desktop). We will not support RStudio cloud.
+## RStudio
+
+To interact with R, we use RStudio. Please install the latest desktop version of [RStudio IDE](http://www.rstudio.com/ide/download/desktop). We will not support RStudio Cloud.
 
 ## R Packages
 
-You’ll also need to install some R packages. An R package is a collection of functions, data, and documentation that extends the capabilities of base R. Using packages is key to the successful use of R. 
+You will also need to install some R packages. An R package is a collection of functions, data, and documentation that extends the capabilities of base R. Using packages is key to the successful use of R. 
 
-Many of the packages that you will learn in this class are part of the so-called `tidyverse`. The packages in the `tidyverse` share a common philosophy of data and R programming, and are designed to work together naturally.
+Many of the packages that you will learn in this class are part of the so-called `tidyverse`. The packages in the `tidyverse` share a common philosophy of data and R programming and are designed to work together naturally.
 
-You can install the complete tidyverse with a single line of code in R Studio:
+You can install the complete tidyverse with a single line of code in RStudio:
 
 ```{r eval = F}
 install.packages("tidyverse")
 ```
 
-On your own computer, type that line of code in the RStudio console, and then press enter to run it. R will download the packages from CRAN and install them on to your computer. If you have problems installing, make sure that you are connected to the internet, and that https://cloud.r-project.org/ isn’t blocked by your firewall or proxy.
+On your own computer, type that line of code in the RStudio console and then press enter to run it. R will download the packages from CRAN and install them on to your computer. If you have problems installing, make sure that you are connected to the internet and that https://cloud.r-project.org/ is not blocked by your firewall or proxy.
 
 We will also be requiring a few other important packages. Run the following line of code to download all of them at once:
 
@@ -47,9 +49,9 @@ install.packages("rmarkdown", "knitr", "gapminder",
                  "textdata", "stm")
 ```
  
-## LaTex
+## LaTeX
 
-In order to knit rmarkdown files to pdf files, you need to install some version of Latex. For students who have not installed LaTeX before, we recommend that you install TinyTeX (https://yihui.name/tinytex/).
+In order to knit R Markdown files to PDF files, you need to install some version of LaTeX. For students who have not installed LaTeX before, we recommend that you install TinyTeX (https://yihui.name/tinytex/).
 
 Open RStudio and type these lines into the command-line console:
 
@@ -66,17 +68,17 @@ Bash is a commonly-used shell that gives you the power to do simple tasks more q
 
 Install Git for Windows by downloading and running the [installer](http://msysgit.github.io/). This will provide you with both Git and Bash in the Git Bash program. **NOTE**: on the ~6th step of installation, you will need to select the option "Use Windows' default console window" rather than the default of "Use MinTTY" in order for nano to work correctly.
 
-After the installer does its thing, it leaves the window open, so that you can play with the "Git Bash".
+After the installer does its thing, it leaves the window open so that you can play with the "Git Bash."
 
-Chances are that you want to have an easy way to restart that Git Bash. You can install shortcuts in the start menu, on the desktop or in the QuickStart bar by calling the script /share/msysGit/add-shortcut.tcl (call it without parameters to see a short help text).
+Chances are that you want to have an easy way to restart that Git Bash. You can install shortcuts in the start menu, on the desktop, or in the QuickStart bar by calling the script /share/msysGit/add-shortcut.tcl (call it without parameters to see a short help text).
 
 #### Mac OS X {-}
 
-The default shell in all versions of Mac OS X is bash, so no need to install anything. You access bash from the Terminal (found in `/Applications/Utilities`). You may want to keep Terminal in your dock for this class.
+The default shell in all versions of Mac OS X is Bash, so no need to install anything. You access Bash from the Terminal (found in `/Applications/Utilities`). You may want to keep Terminal in your dock for this class.
 
 #### Linux {-}
 
-The default shell is usually Bash, but if your machine is set up differently you can run it by opening a terminal and typing bash. There is no need to install anything.
+The default shell is usually Bash, but, if your machine is set up differently, you can run it by opening a terminal and typing bash. There is no need to install anything.
 
 ## Git
 
@@ -88,13 +90,13 @@ Git should be installed on your computer as part of your Bash install (described
 
 #### Mac OS X {-}
 
-**For OS X 10.9 and higher**, install Git for Mac by downloading and running the most recent "mavericks" installer from [this list](http://sourceforge.net/projects/git-osx-installer/files/). After installing Git, there will not be anything in your `/Applications` folder, as Git is a command line program. **For older versions of OS X (10.5-10.8)** use the most recent available installer labelled "snow-leopard" available [here](http://sourceforge.net/projects/git-osx-installer/files/).
+**For OS X 10.9 and higher**, install Git for Mac by downloading and running the most recent "mavericks" installer from [this list](http://sourceforge.net/projects/git-osx-installer/files/). After installing Git, there will not be anything in your `/Applications` folder, as Git is a command line program. **For older versions of OS X (10.5-10.8)**, use the most recent available installer labelled "snow-leopard" available [here](http://sourceforge.net/projects/git-osx-installer/files/).
 
 #### Linux {-}
 
-If Git is not already available on your machine you can try to install it via your distro's package manager. For Debian/Ubuntu run sudo apt-get install git and for Fedora run sudo yum install git.
+If Git is not already available on your machine, you can try to install it via your distro's package manager. For Debian/Ubuntu, run sudo apt-get install git; for Fedora, run sudo yum install git.
 
-## Other helpful tools
+## Other Helpful Tools
 
 While not required, I recommend you install the following tools:
 
@@ -102,11 +104,11 @@ While not required, I recommend you install the following tools:
 
 2. [Sublime Text](https://www.sublimetext.com/3) is a free, advanced text editor. 
 
-## Testing your installation
+## Testing Your Installation
 
-If you have trouble with installation, please come to the Installfest on **Wed Oct 2, 10-12 in Pick 411**.
+If you have trouble with installation, please come to the Installfest on **Wednesday, September 30 from 9:30 am to 11:30 am, on Zoom**.
 
-Open a command line window ('terminal' or, on windows, 'git bash'), and enter the following commands (without the $ sign): 
+Open a command line window ('terminal' or, on windows, 'git bash') and enter the following commands (without the $ sign): 
 
 ```bash
 $ R --version
@@ -115,9 +117,9 @@ $ git --version
 
 If everything has been installed correctly, those commands *should* print output version information. 
 
-**NB**: If you're using git bash, the `R --version` command may not work. In this case, just make sure you can open up RStudio.
+**NB**: If you are using Git Bash, the `R --version` command may not work. In this case, just make sure you can open up RStudio.
 
-Software Carpentry maintains a list of common issues that occur during installation may be useful for our class here: [Configuration Problems and Solutions wiki page.](https://github.com/swcarpentry/workshop-template/wiki/Configuration-Problems-and-Solutions)
+Software Carpentry maintains a list of common issues that occur during installation that may be useful for our class here: [Configuration Problems and Solutions wiki page.](https://github.com/swcarpentry/workshop-template/wiki/Configuration-Problems-and-Solutions)
 
 Credit: Thanks to [Software Carpentry](http://software-carpentry.org/workshops/) for providing installation guidelines.
 
