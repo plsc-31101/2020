@@ -1,0 +1,149 @@
+---
+title: "Classes"
+author: "PLSC 31101"
+date: "Fall 2019"
+output: html_document
+---
+
+## Sub-assignment
+
+### Basics of Sub-assignment
+
+All subsetting operators can be combined with assignment to modify selected values of the input vector.
+
+```{r, error = TRUE}
+x <- 1:5
+x[c(1, 2)] <- 2:3
+x
+```
+
+This is especially useful when conditionally modifying vectors. For example, let's say we wanted to replace all values less than 3 with NA.
+
+```{r}
+x <- 1:5
+x[x < 3] <- NA
+x
+```
+
+This also works on dataframes. Let's say we wanted to modify our `planets` dataframe. 
+
+```{r}
+# Definition of vectors
+name <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")
+type <- c("Terrestrial planet", "Terrestrial planet", "Terrestrial planet", "Terrestrial planet", "Gas giant", "Gas giant", "Gas giant", "Gas giant")
+diameter <- c(0.382, 0.949, 1, 0.532, 11.209, 9.449, 4.007, 3.883)
+rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+
+planets <- data.frame(name, type, diameter, rings, stringsAsFactors = F)
+planets
+```
+
+Let's say we want to replace the term "Terrestrial planet" with "TP". First we need to subset `type` for those elements:
+
+```{r}
+planets$type == "Terrestrial planet"
+```
+
+Now we can re-assign the values of `type`:
+
+```{r}
+planets$type[planets$type == "Terrestrial planet"]
+planets$type[planets$type == "Terrestrial planet"] <- "TP"
+planets
+```
+
+
+### Recycling
+
+When applying an operation to two vectors that requires them to be the same length, R automatically recycles, or repeats, the shorter one, until it is long enough to match the longer one. 
+
+```{r}
+df <- data.frame(x = 4:7, y = letters[1:4])
+
+# r recycles values
+df$x <- c(1, 2)
+df
+
+# sometimes this is helpful if you want to replace an entire vector to one value.
+df$x <- df$x + 3
+df
+```
+
+### Applications
+
+The basic principles described above give rise to a wide variety of useful applications. Some of the most important applications are described below. Many of these basic techniques are wrapped up into more concise functions (e.g., `subset()`, `merge()`, `plyr::arrange()`), but it is useful to understand how they are implemented with basic subsetting. This will allow you to adapt to new situations that are not dealt with by existing functions.
+
+#### Ordering Columns {-}
+
+Consider we have this data frame:
+
+```{r}
+df <- data.frame(
+  Country = c("Iraq", "China", "Mexico", "Russia", "United Kingdom"),
+  Region = c("Middle East", "Asia", "North America", "Eastern Europe", "Western Europe"),
+  Language = c("Arabic", "Mandarin", "Spanish", "Russian", "English")
+)
+df
+```
+
+What if we wanted to reorder the columns so that `Region` is first? We can do so using subsetting with the names (or number) of the columns:
+
+```{r}
+df <- data.frame(
+  Country = c("Iraq", "China", "Mexico", "Russia", "United Kingdom"),
+  Region = c("Middle East", "Asia", "North America", "Eastern Europe", "Western Europe"),
+  Language = c("Arabic", "Mandarin", "Spanish", "Russian", "English")
+)
+
+# reorder columns using names
+names(df)
+df1 <- df[, c("Region", "Country", "Language")]
+df1
+
+# reorder columns using indices
+names(df)
+df1 <- df[, c(2,1,3)]
+df1
+```
+
+One helpul function is the `order` function. It takes a vector as input and returns an integer vector describing how the subsetted vector should be ordered:
+
+```{r}
+x <- c("b", "c", "a")
+order(x)
+x[order(x)]
+```
+
+Knowing this, we can use `order` to reorder our columns by alphabetical order.
+
+#### Removing (or keeping) columns from data frames. {-}
+
+There are two ways to remove columns from a data frame. You can set individual columns to `NULL`: 
+
+```{r}
+df <- data.frame(
+  Country = c("Iraq", "China", "Mexico", "Russia", "United Kingdom"),
+  Region = c("Middle East", "Asia", "North America", "Eastern Europe", "Western Europe"),
+  Language = c("Arabic", "Mandarin", "Spanish", "Russian", "English")
+)
+
+df$Language <- NULL
+```
+
+Or you can subset to return only the columns you want:
+
+```{r}
+df <- data.frame(
+  Country = c("Iraq", "China", "Mexico", "Russia", "United Kingdom"),
+  Region = c("Middle East", "Asia", "North America", "Eastern Europe", "Western Europe"),
+  Language = c("Arabic", "Mandarin", "Spanish", "Russian", "English")
+)
+
+df1 <- df[, c("Country", "Region")]
+df1
+
+# using negative integers
+df2 <- df[, -3]
+df2
+```
+

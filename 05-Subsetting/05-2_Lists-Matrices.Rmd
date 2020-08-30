@@ -1,0 +1,112 @@
+---
+title: "Subsetting"
+author: "PLSC 31101"
+date: "Fall 2019"
+output: html_document
+---
+
+```{r include = F}
+library(kableExtra)
+```
+
+## Subsetting Lists 
+
+Subsetting a list works in the same way as subsetting an atomic vector. However, there's one important difference: `[` will always return a list. `[[` and `$`, as described below, let you pull out the components of the list.
+
+Let's illustrate with the following list `my_list`:
+
+```{r}
+my_list <- list(a = 1:3, b = "a string", c = pi, d = list(-1, -5))
+```
+
+### With `[`
+
+`[` extracts a sub-list where the result will always be a list. Like with vectors, you can subset with a logical, integer, or character vector.
+
+
+```{r}
+my_list[1:2]
+str(my_list[1:2])
+
+my_list[4]
+str(my_list[4])
+
+my_list["a"]
+str(my_list["a"])
+```
+
+### With `[[`
+
+`[[` extracts a single _component_ from a list. In other words, it removes that hierarchy and returns whatever object is stored inside.
+
+```{r}
+my_list[[1]]
+str(my_list[[1]])
+
+# compare to
+my_list[1]
+str(my_list[1])
+```
+The distinction between `[` and `[[` is really important for lists, because `[[` drills down into the list while `[` returns a new, smaller list. 
+
+>  "If list `x` is a train carrying objects, then `x[[5]]` is
+> the object in car 5; `x[4:6]` is a train of cars 4-6." 
+>
+> --- @RLangTip
+
+
+### with `$`
+
+`$` is a shorthand for extracting named elements of a list. It works similarly to `[[` except that you don’t need to use quotes.
+
+```{r}
+my_list$a
+
+# same as
+my_list[["a"]]
+```
+
+The `$` operator becomes especially helpful when applied to dataframes, explained more below.
+
+### Challenge
+
+Take a look at the linear model below:
+
+```{r}
+mod <- lm(mpg ~ wt, data = mtcars)
+summary(mod)
+```
+
+Extract the R squared from the model summary.
+
+## Subsetting Matrices
+
+Similar to vectors, you can use the square brackets `[ ]` to select one or multiple elements from a matrix. But whereas vectors have one dimension, matrices have two dimensions. We therefore have to use two subsetting vectors -- one for rows to select, another for columns -- separated by a comma.
+
+Check out the following matrix:
+
+```{r}
+a <- matrix(1:9, nrow = 3)
+colnames(a) <- c("A", "B", "C")
+a
+```
+
+We can subset this matrix by passing two subsetting vectors: one to select rows, another to select columns: 
+
+```{r}
+# selects the value at the first row and second column
+a[1, 2] 
+
+# selects first row, and the first and third columns
+a[1, -2] 
+
+# selects first two rows, and the first and third columns
+a[c(1,2), c(1, 3)] 
+```
+
+Blank subsetting is also useful because it lets you keep all rows or all columns.
+
+```{r}
+a[c(1, 2), ] # selects first two rows and all columns
+```
+

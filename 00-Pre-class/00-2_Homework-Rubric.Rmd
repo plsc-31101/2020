@@ -1,0 +1,24 @@
+---
+title: "R Basics"
+author: "PLSC 31101"
+date: "Fall 2019"
+output: html_document
+---
+
+# Homework Rubric
+
+Each question will be graded along the following criteria:
+
+**Check Minus:** The code doesn't run, or does not do what the question is asking.
+
+**Check:** The code works, but exhibits one of the following problems: 
+
+1) poor documentation / disorganized; 
+2) repetitive / redundant / overly complex; 
+3) graphs and tables lack labels or are otherwise difficult to understand. 
+
+**Check Plus:** The code works, and is: 
+
+1) well-documented and organized;
+2) clean and efficient;
+3) graphs and tables have proper labels and are easily readable.

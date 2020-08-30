@@ -1,0 +1,157 @@
+---
+title: "Two-Dimensional Data in R"
+author: "PLSC 31101"
+date: "Fall 2019"
+output: html_document
+---
+
+## Dataframes
+
+A dataframe is a very important data type in R. It's pretty much the *de facto* data structure for most tabular data and it's also what we use for statistics. 
+
+Let's say we're working with the following survey data:
+
+* 'Are you married?' or 'yes/no' questions (`logical`)
+* 'How old are you?' (`numeric`)
+* 'What is your opinion on Trump?' or other 'open-ended' questions (`character`)
+* ...
+
+A matrix won't work here because the dataset contains different data types. 
+
+A dataframe is a 2-dimentional data structure containing heterogeneous data types. Each column is a variable of a dataset, and the rows are observations.
+
+> NB: You might have heard of "tibbles," used in the `tidyverse` suite of packages. Tibbles are like dataframes 2.0, tweaking some of the behavior of dataframes to make life easier for data anlysis. For now, just think of tibbles and dataframes as the same thing and don't worry about the difference. 
+
+### Creating Dataframes
+
+R contains a number of built-in datasets that are stored as dataframes. For example, the `mtcars` dataset contains information on automobile design and performance for 32 automobiles:
+
+```{r}
+class(mtcars)
+head(mtcars)
+```
+
+We also create dataframes when we import data through `read.csv` or other data file input. We'll talk more about importing data later in the class.
+
+We can create a dataframe from scratch using `data.frame()`.  This function takes vectors as input:
+
+```{r}
+# Definition of vectors
+name <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune")
+type <- c("Terrestrial planet", "Terrestrial planet", "Terrestrial planet", "Terrestrial planet", "Gas giant", "Gas giant", "Gas giant", "Gas giant")
+diameter <- c(0.382, 0.949, 1, 0.532, 11.209, 9.449, 4.007, 3.883)
+rings <- c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+
+planets <- data.frame(name, type, diameter, rings)
+planets
+```
+
+Beware: `data.frame()`'s default behaviour turns strings into factors. Use `stringAsFactors = FALSE` to suppress this behaviour as needed:
+
+```{r}
+planets <- data.frame(name, type, diameter, rings, stringsAsFactors = F)
+planets
+```
+
+### The Structure of Dataframes
+
+Under the hood, a dataframe is a list of equal-length vectors. This makes it a 2-dimensional structure, so it shares properties of both the matrix and the list. 
+
+```{r}
+vec1 <- 1:3
+vec2 <- c("a", "b", "c")
+df <- data.frame(vec1, vec2)
+
+str(df)
+```
+
+The `length()` of a dataframe is the length of the underlying list and so is the same as `ncol()`; `nrow()` gives the number of rows. 
+
+```{r}
+vec1 <- 1:3
+vec2 <- c("a", "b", "c")
+df <- data.frame(vec1, vec2)
+
+# these two are equivalent - number of columns
+length(df)
+ncol(df)
+
+# get number of rows
+nrow(df)
+
+# get number of both columns and rows
+dim(df)
+```
+
+### Naming Dataframes
+
+Like matrices, dataframes have `colnames()`, and `rownames()`. However, since dataframes are really lists (of vectors) under the hood  `names()` and `colnames()` are the same thing. 
+
+```{r}
+vec1 <- 1:3
+vec2 <- c("a", "b", "c")
+df <- data.frame(vec1, vec2)
+
+# these two are equivalent
+names(df)
+colnames(df)
+
+# change the colnames
+colnames(df) <- c("Number", "Character")
+df
+
+names(df) <- c("Number", "Character")
+df
+
+# change the rownames
+rownames(df) 
+rownames(df) <- c("donut", "pickle", "pretzel")
+df
+```
+
+### Coercing Dataframes
+
+Coerce an object to a dataframe with `as.data.frame()`:
+
+* A vector will create a one-column dataframe.
+
+* A list will create one column for each element; it's an error if they're 
+  not all the same length.
+  
+* A matrix will create a data frame with the same number of columns and rows as the matrix.
+
+### Challenges
+
+#### Challenge 1. {-}
+
+Create a 3x2 data frame called `basket`. The first column should contain the names of 3 fruits. The second column should contain the price of those fruits. 
+
+#### Challenge 2. {-}
+
+Now give your dataframe appropriate column and row names.
+
+#### Challenge 3. {-}
+
+Add a third column called `color`, that tells me what color each fruit is.
+
+### Quiz
+
+You can check your answers in [answers](#data-structure-answers).
+
+1. How is a list different from an vector? 
+
+2. What are the four common types of vectors? 
+
+3. What are names? How do you get them and set them?
+
+4. How is a matrix different from a data frame?
+
+### Answers {#data-structure-answers}
+
+1.  The elements of a list can be any type (even a list); the elements of an atomic vector are all of the same type. 
+   
+2.  The four common types of  vector are logical, integer, double  (sometimes called numeric), and character. 
+    
+3.  Names allow you to attach labels to values. You can get and set individual names with `names(x)` and `names(x) <- c("x", "y", ...)`.
+
+4.  Every element of a matrix must be the same type; in a data frame, the different columns can have different types.

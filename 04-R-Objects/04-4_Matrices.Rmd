@@ -1,0 +1,90 @@
+---
+title: "Two-Dimensional Data in R"
+author: "PLSC 31101"
+date: "Fall 2019"
+output: html_document
+---
+
+## Matrices
+
+Matrices are 2-d vectors. That is, they are a collection of elements of the same data type (numeric, character, or logical), arranged into a fixed number of rows and columns. 
+
+By definition, if you want to combine different types of data (one column numbers, another column characters), you want a **dataframe**, not a matrix. 
+
+### Creating Matrices
+
+We can create a matrix using the `matrix()` function. In this function, we assign dimensions to a vector, like this:
+
+```{r}
+m <- matrix(1:6, nrow = 2, ncol = 3)
+m
+```
+
+Notice that matrices fill column-wise. We can change this using the `byrow` argument:
+
+```{r}
+m <- matrix(1:6, byrow = T, nrow = 2, ncol = 3)
+m
+```
+
+Another way to create matrices is to bind columns or rows using `cbind()` and `rbind()`.
+
+```{r}
+x <- 1:3
+y <- 10:12
+cbind(x, y)
+# or 
+rbind(x, y)
+```
+
+### Matrix Dimensions
+
+Use `dim()` to find out how many rows or columns are in a matrix (or dataframe)
+
+```{r}
+dim(m)
+```
+
+We can transpose a matrix (or dataframe) with `t()`
+
+```{r}
+m <- matrix(1:6, nrow = 2, ncol = 3)
+m
+t(m)
+```
+
+### Matrix Names
+
+Just like vectors or lists, we can give matrices names that describe the rows and columns
+
+```{r}
+m <- matrix(1:6, nrow = 2, ncol = 3)
+
+rownames(m) <- c("row1", "row2")
+colnames(m) <- c("A", "B", "C")
+
+m
+```
+
+### Challenge
+
+Take a look at the vector I've created about box office sales for the first three Harry Potter movies:
+
+```{r}
+# Box office sales (in millions!)
+philosophers_stone <- c(66.1, 317.6, 657.2)
+chamber_secrets <- c(54.7, 261.9, 616.9)
+prisoner_azkaban <- c(45.6, 249.5, 547.1)
+
+# Vectors region and titles, used for naming
+region <- c("UK", "US", "Other")
+titles <- c("Philosopher's Stone", "Chamber of Secrets", "Prisoner of Azkaban")
+```
+
+Your challenge is to:
+
+1. Combine the first three vectors into a matrix
+2. Add names for the matrix's rows (`titles`) and columns (`region`)
+3. Use `rowSums()` to find the total Worldwide Box Office sales for each movie.
+
+

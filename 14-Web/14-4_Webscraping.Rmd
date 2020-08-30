@@ -1,0 +1,198 @@
+---
+title: "Lecture Code"
+author: "Pete Cuppernull"
+date: "8/13/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## Webscraping
+
+If no API is available, we can scrape a website directory. Webscraping has a number of benefits and challenges compared to APIs:
+
+__Webscraping Benefits__
+
+* Any content that can be viewed on a webpage can be scraped. [Period](https://blog.hartleybrody.com/web-scraping/)
+* No API needed
+* No rate-limiting or authentication (usually)
+
+__Webscraping Challenges__
+
+* Rarely tailored for researchers
+* Messy, unstructured, inconsistent
+* Entirely site-dependent
+
+#### Some Disclaimers {-}
+
+* Check a site's terms and conditions before scraping.
+* Be nice - don't hammer the site's server. Review [these ethical webscraping tips](https://towardsdatascience.com/ethics-in-web-scraping-b96b18136f01)
+* Sites change their layout all the time. Your scraper will break.
+ 
+### What's a website?
+
+A website is some combination of codebase and database. The "front end" product is HTML + CSS stylesheets + javascript, looking something like this:
+
+```{r echo = F}
+knitr::include_graphics(path = "img/html.png")
+```
+
+Your browser turns that into a nice layout.
+```{r echo = F}
+knitr::include_graphics(path = "img/layout.png")
+```
+
+
+### HTML
+
+The core of a website is __HTML__ (Hyper Text Markup Language.) HTML is composed of a tree of HTML _nodes__elements__, such as headers, paragraphs, etc. 
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page title</title>
+	</head>
+ 	<body>
+ 		<p>Hello world!</p>
+ 	</body>
+</html>
+```
+
+HTML elements can contain other elements:
+
+```{r echo = F}
+knitr::include_graphics(path = "img/HTMLDOMTree.png")
+```
+
+Generally speaking, an HTML element has three components:
+
+1. Tags (starting and ending the element)
+2. Atributes (giving information about the element)
+3. Text, or Content (the text inside the element)
+
+```{r}
+knitr::include_graphics(path = "img/html-element.png")
+```
+
+#### HTML: Tags {-}
+
+```{r echo = F}
+knitr::include_graphics(path = "img/html-tags.png")
+```
+
+__Common HTML tags__
+
+| Tag        | Meaning           | 
+| ------------- |-------------  |
+| `<head>`     | page header (metadata, etc | 
+| `<body>`     | holds all of the content |
+| `<p>` | regular text (paragraph) |
+| `<h1>`,`<h2>`,`<h3>` | header text, levels 1, 2, 3  |
+| `ol,`,`<ul>`,`<li>` | ordered list, unordered list, list item |
+| `<a href="page.html">` | link to "page.html" |
+| `<table>`,`<tr>`,`<td>`  | table, table row, table item |
+| `<div>`,`<span` | general containers |
+
+#### HTML Attributes {-}
+
+* HTML elements can have attributes.
+* Attributes provide additional information about an element.
+* Attributes are always specified in the start tag.
+* Attributes come in name/value pairs like: name="value"
+
+```{r echo = F}
+knitr::include_graphics(path = "img/html-attributes.png")
+```
+
+* Sometimes we can find the data we want just by using HTML tags or attributes (e.g, all the `<a>` tags)
+* More often, this isn't enough: There might be 1000 `<a>` tags on a page. But maybe we want only the `<a>` tags *inside* of a `<p>` tag.
+* Enter CSS
+
+### CSS
+
+CSS stands for __Cascading Style Sheet__. CSS defines how HTML elements are to be displayed.
+
+HTML came first. But it was only meant to define content, not format it. While HTML contains tags like `<font>` and `<color>`, this is a very inefficient way to develop a website.
+
+To solve this problem, CSS was created specifically to display content on a webpage. Now, one can change the look of an entire website just by changing one file.
+
+Most web designers litter the HTML markup with tons of `class`es and `id`s to provide "hooks" for their CSS.
+
+You can piggyback on these to jump to the parts of the markup that contain the data you need.
+
+#### CSS Anatomy {-}
+
+* Selectors
+    - Element selector: `p`
+    - Class selector:  `p class="blue"`
+    - I.D. selector: `p id="blue"`
+
+* Declarations
+    - Selector: `p`
+    - Property: `background-color`
+    - Value: `yellow`
+
+* Hooks
+
+```{r echo = F}
+knitr::include_graphics(path = "img/css-rule-2.png")
+```
+
+#### CSS + HTML
+
+```html
+<body>
+	<table id="content">
+    	<tr class='name'>
+        	<td class='firstname'>
+         		Kurtis
+        	</td>
+        	<td class='lastname'>
+          		McCoy
+        	</td>
+    	</tr>
+    	<tr class='name'>
+      		<td class='firstname'>
+          		Leah
+        	</td>
+        	<td class='lastname'>
+          		Guerrero
+     		</td>
+    	</tr>
+ 	</table>
+</body>
+```
+
+#### Challenge 1 {-}
+
+Find the CSS selectors for the following elements in the HTML above.
+
+(Hint: There will be multiple solutions for each)
+
+1. The entire table
+2. The row containing "Kurtis McCoy"
+3. Just the element containing first names
+
+
+### Finding Elements with Selector Gadget
+
+Selector Gadget is a browser plugin to help you find HTML elements. Install Selector Gadget on your browser by following [these instructions](https://selectorgadget.com/). 
+
+Once installed, run Selector Gadget and simply click on the type of information you want to select from the webpage. Once this is selected, you can then click the pieces of information you **don't** want to keep. Do this until only the pieces you want to keep remain highlighted, then copy the selector from the bottom pane.
+
+Here's the basic strategy of webscraping:
+
+1. Use Selector Gadget to see how your data is structured
+2. Pay attention to HTML tags and CSS selectors
+3. Pray that there is some kind of pattern
+4. Use R and add-on modules like `RVest` to extract just that data.
+
+#### Challenge 2 {-}
+
+Go to http://rochelleterman.github.io/. Using Selector Gadget,
+
+1. Find the CSS selector capturing all rows in the table.
+2. Find the image source URL.
+3. Find the HREF attribute of the link.
+
